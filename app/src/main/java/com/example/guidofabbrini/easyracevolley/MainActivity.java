@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
     // private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
     private String urlJsonObj = "http://pastebin.com/raw/puYnpK96";
     private static String TAG = MainActivity.class.getSimpleName();
-    private Button btnMakeObjectRequest;
 
     // Progress dialog
     private ProgressDialog pDialog;
@@ -47,24 +46,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnMakeObjectRequest = (Button) findViewById(R.id.btnObjRequest);
         txtResponse = (TextView) findViewById(R.id.txtResponse);
+        txtResponse.setText("Parsing data ..");
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
 
-
-
-        /*btnMakeObjectRequest.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // making json object request
-                makeJsonObjectRequest();
-            }
-        });*/
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +61,6 @@ public class MainActivity extends Activity {
                 //Do something here
             }
         }, 5000);
-
 
     }
 
@@ -114,7 +102,7 @@ public class MainActivity extends Activity {
                         String avg_lap_time = d.getString("avg_lap_time");
                         Float avg_lap_time_sec = (Float.parseFloat(avg_lap_time) / 1000);
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
-                        jsonResp.append("Position: " + position + "\n");
+                        jsonResp.append("Position: ").append(position).append("\n");
                         jsonResp.append("Name: ").append(name).append("\n");
                         jsonResp.append("Average lap time: " + avg_lap_totext + "\n");
                         jsonResp.append("lap_count: " + lapcount + "\n\n");
