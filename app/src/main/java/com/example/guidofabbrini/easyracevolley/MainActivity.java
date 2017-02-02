@@ -75,12 +75,8 @@ public class MainActivity extends Activity {
                 //Do something here
             }
         }, 5);
-      // IL LOOPER NON CREDO FUNZIONI!!!
+          // IL LOOPER NON CREDO FUNZIONI!!!
     }
-
-    /**
-     * Method to make json object request where json response starts wtih {
-     */
 
 
     private void makeJsonObjectRequest() {
