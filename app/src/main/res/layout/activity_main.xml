@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:text="Title"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/title" />
-
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
@@ -21,6 +12,31 @@
         android:layout_below="@+id/title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/session_name"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/session"
+        android:textStyle="normal|italic"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:name="Title"
+        android:textSize="30sp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/session"
+        android:layout_toEndOf="@+id/session" />
 
 
 </RelativeLayout>

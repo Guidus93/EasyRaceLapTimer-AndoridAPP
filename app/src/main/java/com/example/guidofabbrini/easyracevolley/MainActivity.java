@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
     // Progress dialog
     private ProgressDialog pDialog;
 
-
+    private TextView title_main;
     private ListView lv;
 
     ArrayList<HashMap<String, String>> dataStream;
@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
 
         dataStream =new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
+        title_main = (TextView) findViewById(R.id.title);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -68,10 +69,13 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 makeJsonObjectRequest();
+                Toast.makeText(getApplicationContext(),
+                        "Refreshing the page .. ",
+                        Toast.LENGTH_LONG).show();
                 //Do something here
             }
-        }, 5000);
-
+        }, 5);
+      // IL LOOPER NON CREDO FUNZIONI!!!
     }
 
     /**
@@ -97,6 +101,13 @@ public class MainActivity extends Activity {
 
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
+                    JSONObject session = jsonObj.getJSONObject("session");
+                    String title = session.getString("title");
+
+                    title_main.setText(title);
+
+
+
                     // Getting JSON Array node
                     JSONArray data = jsonObj.getJSONArray("data");
 
@@ -117,6 +128,7 @@ public class MainActivity extends Activity {
                         HashMap<String, String> positions = new HashMap<>();
 
                         // adding each child node to HashMap key => value
+                        positions.put("title", title);
                         positions.put("position", position);
                         positions.put("name", name);
                         positions.put("lapcount", lapcount);
