@@ -104,8 +104,8 @@ public class MainActivity extends Activity {
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
                         jsonResp.append("Position: ").append(position).append("\n");
                         jsonResp.append("Name: ").append(name).append("\n");
-                        jsonResp.append("Average lap time: " + avg_lap_totext + "\n");
-                        jsonResp.append("lap_count: " + lapcount + "\n\n");
+                        jsonResp.append("Average lap time: ").append(avg_lap_totext).append("\n");
+                        jsonResp.append("lap_count: ").append(lapcount).append("\n\n");
                     }
 
                     txtResponse.setText(jsonResp);
