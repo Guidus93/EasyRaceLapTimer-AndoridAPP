@@ -9,6 +9,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -24,10 +27,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends Activity {
 
 
-    // json array response url
     // private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
     private String urlJsonObj = "http://pastebin.com/raw/puYnpK96";
     private static String TAG = MainActivity.class.getSimpleName();
@@ -35,10 +40,15 @@ public class MainActivity extends Activity {
     // Progress dialog
     private ProgressDialog pDialog;
 
-    private TextView txtResponse;
 
-    // string builder to show the parsed response --> append method required
-    StringBuilder jsonResp = new StringBuilder();
+    private ListView lv;
+
+    ArrayList<HashMap<String, String>> dataStream;
+    /**FAMILY TREE of the HashMap implementation
+     Map Interface is an object that maps keys to values
+     public abstract class AbstractMap --> implements Map < K , V >
+     public class HashMap extends AbstractMap<K, V> implements Map<K, V>
+     This implementation provides all of the optional map operations*/
 
 
     @Override
@@ -46,8 +56,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtResponse = (TextView) findViewById(R.id.txtResponse);
-        txtResponse.setText("Parsing data ..");
+        dataStream =new ArrayList<>();
+        lv = (ListView) findViewById(R.id.list);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -102,13 +112,31 @@ public class MainActivity extends Activity {
                         String avg_lap_time = d.getString("avg_lap_time");
                         Float avg_lap_time_sec = (Float.parseFloat(avg_lap_time) / 1000);
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
-                        jsonResp.append("Position: ").append(position).append("\n");
-                        jsonResp.append("Name: ").append(name).append("\n");
-                        jsonResp.append("Average lap time: ").append(avg_lap_totext).append("\n");
-                        jsonResp.append("lap_count: ").append(lapcount).append("\n\n");
+
+                        // tmp hash map for single contact
+                        HashMap<String, String> positions = new HashMap<>();
+
+                        // adding each child node to HashMap key => value
+                        positions.put("position", position);
+                        positions.put("name", name);
+                        positions.put("lapcount", lapcount);
+                        positions.put("avg_lap_totext", avg_lap_totext);
+
+                        // adding contact to contact list
+                        dataStream.add(positions);
+
                     }
 
-                    txtResponse.setText(jsonResp);
+                    //       Updating parsed JSON data into ListView
+
+                    //Extended Adapter that is the bridge between a ListView and the data that backs the list,
+                    //the ListView can display any data provided that it is wrapped in a ListAdapter
+                    ListAdapter adapter = new SimpleAdapter(
+                            MainActivity.this, dataStream,
+                            R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext"}, new int[]{R.id.position,
+                            R.id.name, R.id.lapcount,R.id.avg_lap_totext});
+                    lv.setAdapter(adapter);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

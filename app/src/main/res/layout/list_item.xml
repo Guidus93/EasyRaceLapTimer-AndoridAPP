@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/ranklabel"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ranklabel" />
+
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ranklabel" />
+
+    <TextView
+        android:id="@+id/namelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ranklabel"
+        android:text="@string/namelabel" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/position"
+        android:layout_toRightOf="@+id/namelabel" />
+
+
+    <TextView
+        android:id="@+id/lapcountlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/namelabel"
+        android:text="@string/lapcountlabel"
+        />
+    <TextView
+        android:id="@+id/lapcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/lapcountlabel"
+
+        />
+
+    <TextView
+        android:id="@+id/avglaplabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lapcountlabel"
+        android:text="@string/avglaplabel"
+        />
+    <TextView
+        android:id="@+id/avg_lap_totext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lapcount"
+        android:layout_toRightOf="@+id/avglaplabel"
+        />
+
+    <TextView
+        android:id="@+id/avglaplabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" sec"
+        android:layout_alignBaseline="@+id/avg_lap_totext"
+        android:layout_alignBottom="@+id/avg_lap_totext"
+        android:layout_toRightOf="@+id/avg_lap_totext"
+        android:layout_toEndOf="@+id/avg_lap_totext" />
+
+</RelativeLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EasyRaceVolley</string>
+    <string name="ranklabel">"Rank: "</string>
+    <string name="namelabel">"Pilot: "</string>
+    <string name="lapcountlabel">"LapCount: "</string>
+    <string name="avglaplabel">"Avg Lap Time: "</string>
 </resources>
