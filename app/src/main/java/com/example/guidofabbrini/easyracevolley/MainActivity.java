@@ -3,25 +3,16 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +20,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import android.os.Handler;
+
 
 public class MainActivity extends Activity {
 
@@ -44,7 +38,7 @@ public class MainActivity extends Activity {
     private ListView lv;
 
     ArrayList<HashMap<String, String>> dataStream;
-    /**FAMILY TREE of the HashMap implementation
+   /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values
      public abstract class AbstractMap --> implements Map < K , V >
      public class HashMap extends AbstractMap<K, V> implements Map<K, V>
@@ -64,19 +58,32 @@ public class MainActivity extends Activity {
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
+        Toast.makeText(getApplicationContext(),
+                "First JSON request ..",
+                Toast.LENGTH_LONG).show();
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                makeJsonObjectRequest();
-                Toast.makeText(getApplicationContext(),
-                        "First JSON request ..",
-                        Toast.LENGTH_LONG).show();
-                //Do something here
-            }
-        }, 5000);
-          // IL LOOPER NON CREDO FUNZIONI!!!
+        // makeJsonObjectRequest();
+
+        handler.post(runnableCode); // Looper calling
+
     }
+
+    // Create the Handler object
+    Handler handler = new Handler();
+    // Define the code block to be executed
+    private Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+
+            makeJsonObjectRequest(); // Volley Request
+
+            Toast.makeText(getApplicationContext(),
+                    "Refreshing ..",
+                    Toast.LENGTH_SHORT).show();
+
+            handler.postDelayed(runnableCode, 10000);
+        }
+    };
 
 
     private void makeJsonObjectRequest() {
@@ -134,16 +141,18 @@ public class MainActivity extends Activity {
                         dataStream.add(positions);
 
                     }
-
                     //       Updating parsed JSON data into ListView
 
                     //Extended Adapter that is the bridge between a ListView and the data that backs the list,
                     //the ListView can display any data provided that it is wrapped in a ListAdapter
                     ListAdapter adapter = new SimpleAdapter(
-                            MainActivity.this, dataStream,
+                    MainActivity.this, dataStream,
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext});
-                    lv.setAdapter(adapter);
+
+//                    TODO: HO PROVATO lv.listAdapter(null) MA APPENDE COMUNQUE TUTTO IN CODA;
+
+                           lv.setAdapter(adapter);
 
 
                 } catch (JSONException e) {
@@ -170,21 +179,10 @@ public class MainActivity extends Activity {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
-
-    protected Void doInBackground(Void... arg0) {
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                makeJsonObjectRequest();
-                Toast.makeText(getApplicationContext(),
-                        "Refreshing ..",
-                        Toast.LENGTH_LONG).show();
-                //Do something here
-            }
-        }, 5);
-
-       return null ;
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
     }
 
 
