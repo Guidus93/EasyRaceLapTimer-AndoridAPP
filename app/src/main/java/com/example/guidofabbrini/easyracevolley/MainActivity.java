@@ -70,11 +70,11 @@ public class MainActivity extends Activity {
             public void run() {
                 makeJsonObjectRequest();
                 Toast.makeText(getApplicationContext(),
-                        "Refreshing the page .. ",
+                        "First JSON request ..",
                         Toast.LENGTH_LONG).show();
                 //Do something here
             }
-        }, 5);
+        }, 5000);
           // IL LOOPER NON CREDO FUNZIONI!!!
     }
 
@@ -168,6 +168,23 @@ public class MainActivity extends Activity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+
+    protected Void doInBackground(Void... arg0) {
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                makeJsonObjectRequest();
+                Toast.makeText(getApplicationContext(),
+                        "Refreshing ..",
+                        Toast.LENGTH_LONG).show();
+                //Do something here
+            }
+        }, 5);
+
+       return null ;
     }
 
 
