@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
     private ProgressDialog pDialog;
 
     private TextView title_main;
-    private ListView lv;
+    private ListView lv ;
 
     ArrayList<HashMap<String, String>> dataStream;
    /**FAMILY TREE of the HashMap implementation
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-
+            dataStream.clear(); // Clear the View
             makeJsonObjectRequest(); // Volley Request
 
             Toast.makeText(getApplicationContext(),
@@ -141,6 +141,8 @@ public class MainActivity extends Activity {
                         dataStream.add(positions);
 
                     }
+                    lv.deferNotifyDataSetChanged();
+                    lv.setAdapter(null);
                     //       Updating parsed JSON data into ListView
 
                     //Extended Adapter that is the bridge between a ListView and the data that backs the list,
@@ -150,10 +152,7 @@ public class MainActivity extends Activity {
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext});
 
-//                    TODO: HO PROVATO lv.listAdapter(null) MA APPENDE COMUNQUE TUTTO IN CODA;
-
-                           lv.setAdapter(adapter);
-
+                    lv.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
