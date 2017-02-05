@@ -27,8 +27,8 @@ import android.os.Handler;
 public class MainActivity extends Activity {
 
 
-    // private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
-    private String urlJsonObj = "http://pastebin.com/raw/puYnpK96";
+    //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
+    private String urlJsonObj = "http://pastebin.com/raw/puYnpK96"; //USE THIS URL FOR DEBUG
     private static String TAG = MainActivity.class.getSimpleName();
 
     // Progress dialog
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 
     private TextView title_main;
     private ListView lv ;
-
+    private Boolean flag;
     ArrayList<HashMap<String, String>> dataStream;
    /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values
@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
         // makeJsonObjectRequest();
 
         handler.post(runnableCode); // Looper calling
+        flag = true;
 
     }
 
@@ -178,13 +179,21 @@ public class MainActivity extends Activity {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
+
     @Override
-    public void onDestroy()
+    public void onPause()
     {
-        super.onDestroy();
+        super.onPause();
+        handler.removeCallbacks(runnableCode);
+        flag = false;
     }
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!flag) {
+            handler.post(runnableCode);
+        }
+    }
     private void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
