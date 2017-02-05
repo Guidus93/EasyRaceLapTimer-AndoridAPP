@@ -37,13 +37,16 @@ public class AppController extends Application {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
 
     public <T> void addToRequestQueue(Request<T> req) {
         req.setTag(TAG);
+        getRequestQueue().add(req);
+    }
+
+    /**FOR FUTURE VOLLEY IMPLEMENTATION!
+     *
+     * public <T> void addToRequestQueue(Request<T> req, String tag) {
+        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
     }
 
@@ -51,5 +54,5 @@ public class AppController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
+    }*/
 }
