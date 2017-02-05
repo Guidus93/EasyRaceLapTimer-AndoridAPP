@@ -74,7 +74,6 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            dataStream.clear(); // Clear the View
             makeJsonObjectRequest(); // Volley Request
 
             Toast.makeText(getApplicationContext(),
@@ -89,6 +88,7 @@ public class MainActivity extends Activity {
     private void makeJsonObjectRequest() {
 
         showpDialog();
+        dataStream.clear(); // Clear the View (Init);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlJsonObj, null, new Response.Listener<JSONObject>() {
