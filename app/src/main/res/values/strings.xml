@@ -6,4 +6,10 @@
     <string name="avglaplabel">"Avg Time "</string>
     <string name="session_name">Session name :</string>
     <string name="application_logo">application logo</string>
+    <string name="pos">#</string>
+    <string name="hint_pos">pos</string>
+    <string name="lapcount">lapcount</string>
+    <string name="hint_avglap">avglap</string>
+    <string name="sec">sec</string>
+    <string name="hint_name">name</string>
 </resources>

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -28,21 +29,23 @@ public class MainActivity extends Activity {
 
 
     //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
-    private String urlJsonObj = "http://pastebin.com/raw/puYnpK96"; //USE THIS URL FOR DEBUG
+    private String urlJsonObj = "http://pastebin.com/raw/xLjUGiH8"; //USE THIS URL FOR DEBUG
     private static String TAG = MainActivity.class.getSimpleName();
 
     // Progress dialog
     private ProgressDialog pDialog;
 
+    private  ImageView image_view,image_view_landscape;
+
     private TextView title_main;
     private ListView lv ;
-    private Boolean flag; // we use this flag for follow the android ActivityLifeCycle
+    private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
     ArrayList<HashMap<String, String>> dataStream;
    /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values
      public abstract class AbstractMap --> implements Map < K , V >
      public class HashMap extends AbstractMap<K, V> implements Map<K, V>
-     This implementation provides all of the optional map operations*/
+     This implementation provides all the optional map operations*/
 
 
     @Override
@@ -53,6 +56,10 @@ public class MainActivity extends Activity {
         dataStream =new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
         title_main = (TextView) findViewById(R.id.title);
+        image_view = (ImageView) findViewById(R.id.imageView);
+        image_view_landscape = (ImageView) findViewById(R.id.imageView2);
+
+        image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -61,8 +68,6 @@ public class MainActivity extends Activity {
         Toast.makeText(getApplicationContext(),
                 "First JSON request ..",
                 Toast.LENGTH_LONG).show();
-
-        // makeJsonObjectRequest();
 
         handler.post(runnableCode); // Looper calling
         flag = true;
