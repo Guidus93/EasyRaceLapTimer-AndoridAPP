@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 
     private TextView title_main;
     private ListView lv ;
-    private Boolean flag;
+    private Boolean flag; // we use this flag for follow the android ActivityLifeCycle
     ArrayList<HashMap<String, String>> dataStream;
    /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values

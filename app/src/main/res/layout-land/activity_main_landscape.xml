@@ -23,7 +23,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/session"
         android:textStyle="normal|italic"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:background="@android:color/holo_orange_light" />
 
     <TextView
         android:name="Title"
@@ -36,7 +37,8 @@
         android:textAllCaps="true"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/session"
-        android:layout_toEndOf="@+id/session" />
+        android:layout_toEndOf="@+id/session"
+        android:background="@android:color/holo_orange_light" />
 
 
 </RelativeLayout>

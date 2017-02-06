@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">EasyRaceVolley</string>
-    <string name="ranklabel">"Rank: "</string>
+    <string name="app_name">EasyRaceLapTimer</string>
+    <string name="ranklabel">"# "</string>
     <string name="namelabel">"Pilot: "</string>
-    <string name="lapcountlabel">"LapCount: "</string>
-    <string name="avglaplabel">"Avg Lap Time: "</string>
+    <string name="lapcountlabel">"Lap "</string>
+    <string name="avglaplabel">"Avg Time "</string>
     <string name="session_name">Session name :</string>
+    <string name="application_logo">application logo</string>
 </resources>

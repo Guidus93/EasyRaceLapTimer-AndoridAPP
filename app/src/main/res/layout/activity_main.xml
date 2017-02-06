@@ -1,15 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <ListView
-        android:id="@+id/list"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/title"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/easy_race_lap_timer_logo_1"
+        android:id="@+id/imageView"
+        android:contentDescription="@string/application_logo"
+        android:cropToPadding="false"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -18,12 +21,13 @@
         android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/session"
         android:textStyle="normal|italic"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:background="@android:color/holo_orange_light"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:name="Title"
@@ -31,12 +35,23 @@
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:id="@+id/title"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/holo_green_light"
         android:textStyle="normal|bold|italic"
         android:textAllCaps="true"
-        android:layout_alignParentTop="true"
+        android:background="@android:color/holo_orange_light"
+        android:layout_alignBaseline="@+id/session"
+        android:layout_alignBottom="@+id/session"
         android:layout_toRightOf="@+id/session"
         android:layout_toEndOf="@+id/session" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        tools:ignore="RtlHardcoded"
+        android:layout_below="@+id/session"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
