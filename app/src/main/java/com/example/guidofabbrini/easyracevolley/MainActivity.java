@@ -65,9 +65,9 @@ public class MainActivity extends Activity {
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
-        Toast.makeText(getApplicationContext(),
+        /*Toast.makeText(getApplicationContext(),
                 "First JSON request ..",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();*/
 
         handler.post(runnableCode); // Looper calling
         flag = true;
