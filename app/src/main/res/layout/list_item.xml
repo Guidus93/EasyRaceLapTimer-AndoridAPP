@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/avglaplabel"
         android:layout_alignLeft="@+id/avglaplabel"
-        android:layout_alignStart="@+id/avglaplabel"
         android:textColor="@color/colorPrimaryDark"
         android:layout_width="wrap_content" />
 
@@ -61,18 +60,6 @@
         android:layout_width="wrap_content" />
 
     <TextView
-        android:id="@+id/avglaplabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/avglaplabel"
-        android:layout_marginLeft="104dp"
-        android:layout_marginStart="104dp"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:layout_below="@+id/name"
-        android:layout_toRightOf="@+id/name"
-        android:layout_toEndOf="@+id/name" />
-
-    <TextView
         android:id="@+id/lapcountlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,6 +80,15 @@
         android:layout_toEndOf="@+id/position"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp" />
+
+    <TextView
+        android:id="@+id/avglaplabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/avglaplabel"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
