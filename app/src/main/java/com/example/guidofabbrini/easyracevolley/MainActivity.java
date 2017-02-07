@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 
     private  ImageView image_view,image_view_landscape;
 
-    private TextView title_main;
+    private TextView title_main,fastest_lap;
     private ListView lv ;
     private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
     ArrayList<HashMap<String, String>> dataStream;
@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
         title_main = (TextView) findViewById(R.id.title);
         image_view = (ImageView) findViewById(R.id.imageView);
         image_view_landscape = (ImageView) findViewById(R.id.imageView2);
+        fastest_lap = (TextView) findViewById(R.id.fastest_lap);
 
         image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
@@ -129,9 +130,15 @@ public class MainActivity extends Activity {
                         String quad = pilot.getString("quad");
                         String team = pilot.getString("team");
                         String lapcount = d.getString("lap_count");
+
                         String avg_lap_time = d.getString("avg_lap_time");
                         Float avg_lap_time_sec = (Float.parseFloat(avg_lap_time) / 1000);
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
+
+                        JSONObject fast_lap = d.getJSONObject("fastest_lap");
+                        String fastest_lap_raw = fast_lap.getString("lap_time");
+                        Float fastest_lap_sec = (Float.parseFloat(fastest_lap_raw) / 1000);
+                        String fastest_lap = Float.toString(fastest_lap_sec);
 
                         // tmp hash map for single contact
                         HashMap<String, String> positions = new HashMap<>();
@@ -142,6 +149,7 @@ public class MainActivity extends Activity {
                         positions.put("name", name);
                         positions.put("lapcount", lapcount);
                         positions.put("avg_lap_totext", avg_lap_totext);
+                        positions.put("fastest_lap", fastest_lap);
 
                         // adding contact to contact list
                         dataStream.add(positions);
@@ -155,8 +163,8 @@ public class MainActivity extends Activity {
                     //the ListView can display any data provided that it is wrapped in a ListAdapter
                     ListAdapter adapter = new SimpleAdapter(
                     MainActivity.this, dataStream,
-                            R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext"}, new int[]{R.id.position,
-                            R.id.name, R.id.lapcount,R.id.avg_lap_totext});
+                            R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
+                            R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
                     lv.setAdapter(adapter);
 

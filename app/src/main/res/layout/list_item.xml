@@ -90,5 +90,38 @@
         android:layout_below="@+id/name"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:text="@string/fastest_lap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/avglaplabel2"
+        android:layout_toRightOf="@+id/avglaplabel2"
+        android:layout_toEndOf="@+id/avglaplabel2"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:id="@+id/textView"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+    <TextView
+        android:hint="@string/fastest_lap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fastest_lap"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sec"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:layout_below="@+id/textView"
+        android:layout_alignRight="@+id/fastest_lap"
+        android:layout_alignEnd="@+id/fastest_lap" />
+
 
 </RelativeLayout>

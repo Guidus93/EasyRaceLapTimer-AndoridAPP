@@ -12,4 +12,5 @@
     <string name="hint_avglap">avglap</string>
     <string name="sec">sec</string>
     <string name="hint_name">name</string>
+    <string name="fastest_lap">Fastest_lap</string>
 </resources>
