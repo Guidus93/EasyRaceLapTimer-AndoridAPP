@@ -3,6 +3,10 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -30,6 +34,8 @@ public class MainActivity extends Activity {
 
     //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
     private String urlJsonObj = "http://pastebin.com/raw/xLjUGiH8"; //USE THIS URL FOR DEBUG
+    private String defaultSSID = "AndroidAP"; // EASY RACE LAP TIMER <-- SSID
+    String currentSSID ;
     private static String TAG = MainActivity.class.getSimpleName();
 
     // Progress dialog
@@ -37,7 +43,7 @@ public class MainActivity extends Activity {
 
     private  ImageView image_view,image_view_landscape;
 
-    private TextView title_main,fastest_lap;
+    private TextView title_main,fastest_lap,connectionControl;
     private ListView lv ;
     private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
     ArrayList<HashMap<String, String>> dataStream;
@@ -47,6 +53,9 @@ public class MainActivity extends Activity {
      public class HashMap extends AbstractMap<K, V> implements Map<K, V>
      This implementation provides all the optional map operations*/
 
+    /**ArrayList: Implements a dynamic array by extending AbstractList*/
+
+    WifiManager mainWifi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,7 @@ public class MainActivity extends Activity {
         image_view = (ImageView) findViewById(R.id.imageView);
         image_view_landscape = (ImageView) findViewById(R.id.imageView2);
         fastest_lap = (TextView) findViewById(R.id.fastest_lap);
+        connectionControl = (TextView) findViewById(R.id.connectionControl);
 
         image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
@@ -70,10 +80,30 @@ public class MainActivity extends Activity {
                 "First JSON request ..",
                 Toast.LENGTH_LONG).show();*/
 
-        handler.post(runnableCode); // Looper calling
-        flag = true;
+        // Initiate wifi service manager
+        mainWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
-    }
+        // Check for wifi is disabled
+        if (!mainWifi.isWifiEnabled())
+        {
+            // If wifi disabled then enable it
+            Toast.makeText(getApplicationContext(), "Wifi is disabled.. making it enabled",
+                    Toast.LENGTH_LONG).show();
+
+            mainWifi.setWifiEnabled(true);
+        }
+       // Control of wifi SSID
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo;
+
+        wifiInfo = wifiManager.getConnectionInfo();
+        if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+             currentSSID = wifiInfo.getSSID();
+        }
+            handler.post(runnableCode); // Looper calling
+            flag = true;
+        }
+
 
     // Create the Handler object
     Handler handler = new Handler();
@@ -81,7 +111,16 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            makeJsonObjectRequest(); // Volley Request
+            // Controlling the SSID
+            if (defaultSSID==currentSSID)  {
+                connectionControl.setBackgroundColor(0xffffbb33); // Classic Orange
+                connectionControl.setText(""); // No text required
+                makeJsonObjectRequest(); // Volley Request
+            }
+            else { connectionControl.setBackgroundColor(0xFFFF0400); // Dark Red
+                if (currentSSID == null) connectionControl.setText("You have no WIFI connection at all !");
+                else connectionControl.setText("Please search for our SSID : "+defaultSSID);
+            }
 
             Toast.makeText(getApplicationContext(),
                     "Refreshing ..",
@@ -155,7 +194,7 @@ public class MainActivity extends Activity {
                         dataStream.add(positions);
 
                     }
-                    lv.deferNotifyDataSetChanged();
+                    lv.deferNotifyDataSetChanged(); // NON CREDO SERVA ANCORA --> DA VERIFICARE
                     lv.setAdapter(null);
                     //       Updating parsed JSON data into ListView
 

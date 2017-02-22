@@ -4,13 +4,6 @@
     android:layout_height="fill_parent" >
 
     <TextView
-        android:id="@+id/ranklabel"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pos" />
-
-    <TextView
         android:id="@+id/position"
         android:hint="@string/hint_pos"
         android:layout_height="wrap_content"
@@ -122,6 +115,18 @@
         android:layout_below="@+id/textView"
         android:layout_alignRight="@+id/fastest_lap"
         android:layout_alignEnd="@+id/fastest_lap" />
+
+    <TextView
+        android:id="@+id/ranklabel"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pos"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
