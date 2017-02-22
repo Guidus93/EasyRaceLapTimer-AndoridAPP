@@ -111,8 +111,9 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            // Controlling the SSID
-            if (defaultSSID==currentSSID)  {
+            /** // Controlling the SSID
+
+             if (defaultSSID==currentSSID)  {
                 connectionControl.setBackgroundColor(0xffffbb33); // Classic Orange
                 connectionControl.setText(""); // No text required
                 makeJsonObjectRequest(); // Volley Request
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
             else { connectionControl.setBackgroundColor(0xFFFF0400); // Dark Red
                 if (currentSSID == null) connectionControl.setText("You have no WIFI connection at all !");
                 else connectionControl.setText("Please search for our SSID : "+defaultSSID);
-            }
+            }*/
 
             Toast.makeText(getApplicationContext(),
                     "Refreshing ..",
