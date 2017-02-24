@@ -22,9 +22,11 @@ import com.android.volley.VolleyLog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import android.os.Handler;
 
@@ -34,7 +36,8 @@ public class MainActivity extends Activity {
 
     //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
     private String urlJsonObj = "http://pastebin.com/raw/xLjUGiH8"; //USE THIS URL FOR DEBUG
-    private String defaultSSID = "AndroidAP"; // EASY RACE LAP TIMER <-- SSID
+    char data[] = {'"', 'm', 'o', 't', 'o', 'l', 'a', 'i', 'k', 'a', '"'};
+    private String defaultSSID = new String(data) ; // EASY RACE LAP TIMER <-- SSID
     String currentSSID ;
     private static String TAG = MainActivity.class.getSimpleName();
 
@@ -44,9 +47,13 @@ public class MainActivity extends Activity {
     private  ImageView image_view,image_view_landscape;
 
     private TextView title_main,fastest_lap,connectionControl;
+
+    //DI PROVA
+    private TextView text_raw_view;
+
     private ListView lv ;
     private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
-    ArrayList<HashMap<String, String>> dataStream;
+    ArrayList<HashMap<String, String>> dataStream , dataAccomulator, dataPilot;
    /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values
      public abstract class AbstractMap --> implements Map < K , V >
@@ -63,12 +70,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         dataStream =new ArrayList<>();
+        dataAccomulator = new ArrayList<>();
+        dataPilot = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
         title_main = (TextView) findViewById(R.id.title);
         image_view = (ImageView) findViewById(R.id.imageView);
         image_view_landscape = (ImageView) findViewById(R.id.imageView2);
         fastest_lap = (TextView) findViewById(R.id.fastest_lap);
         connectionControl = (TextView) findViewById(R.id.connectionControl);
+
+        //DI PROVA
+        text_raw_view = (TextView) findViewById(R.id.text_raw_view);
 
         image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
@@ -92,14 +104,7 @@ public class MainActivity extends Activity {
 
             mainWifi.setWifiEnabled(true);
         }
-       // Control of wifi SSID
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInfo;
 
-        wifiInfo = wifiManager.getConnectionInfo();
-        if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
-             currentSSID = wifiInfo.getSSID();
-        }
             handler.post(runnableCode); // Looper calling
             flag = true;
         }
@@ -111,17 +116,29 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            /** // Controlling the SSID
+            // Control of wifi SSID
+            /*WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo;
 
-             if (defaultSSID==currentSSID)  {
+            wifiInfo = wifiManager.getConnectionInfo();
+            if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                currentSSID = wifiInfo.getSSID();
+            }
+             // Controlling the SSID
+             // Comment this to Debug the app with any connection
+             if (Objects.equals(defaultSSID, currentSSID))  {
                 connectionControl.setBackgroundColor(0xffffbb33); // Classic Orange
                 connectionControl.setText(""); // No text required
-                makeJsonObjectRequest(); // Volley Request
+                 makeJsonObjectRequest(); // Volley Request
+
             }
             else { connectionControl.setBackgroundColor(0xFFFF0400); // Dark Red
                 if (currentSSID == null) connectionControl.setText("You have no WIFI connection at all !");
                 else connectionControl.setText("Please search for our SSID : "+defaultSSID);
+
             }*/
+
+            makeJsonObjectRequest(); // Volley Request
 
             Toast.makeText(getApplicationContext(),
                     "Refreshing ..",
@@ -184,7 +201,6 @@ public class MainActivity extends Activity {
                         HashMap<String, String> positions = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        positions.put("title", title);
                         positions.put("position", position);
                         positions.put("name", name);
                         positions.put("lapcount", lapcount);
@@ -193,16 +209,33 @@ public class MainActivity extends Activity {
 
                         // adding contact to contact list
                         dataStream.add(positions);
-
+                        dataAccomulator.add(positions);
                     }
-                    lv.deferNotifyDataSetChanged(); // NON CREDO SERVA ANCORA --> DA VERIFICARE
-                    lv.setAdapter(null);
+                     // PROVA !!
+                    text_raw_view.setText(dataAccomulator.toString());
+                    dataPilot.clear();
+
+                    for (int i =0; i<dataAccomulator.size();i++) {
+                        if (dataAccomulator.get(i).containsValue("Emiliano") )
+                            dataPilot.add(dataAccomulator.get(i));
+                    }
+
+
+
                     //       Updating parsed JSON data into ListView
 
                     //Extended Adapter that is the bridge between a ListView and the data that backs the list,
                     //the ListView can display any data provided that it is wrapped in a ListAdapter
-                    ListAdapter adapter = new SimpleAdapter(
+
+                    /*ListAdapter adapter = new SimpleAdapter(
                     MainActivity.this, dataStream,
+                            R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
+                            R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
+
+                    lv.setAdapter(adapter);*/
+
+                    ListAdapter adapter = new SimpleAdapter(
+                            MainActivity.this, dataPilot,
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
@@ -256,7 +289,6 @@ public class MainActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-
-
-
 }
+
+
