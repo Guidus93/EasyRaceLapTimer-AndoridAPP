@@ -4,11 +4,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.wifi.SupplicantState;
-import android.net.wifi.WifiInfo;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+
+import android.widget.AdapterView.OnItemClickListener;
+
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,11 +26,9 @@ import com.android.volley.VolleyLog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import android.os.Handler;
 
@@ -107,6 +109,17 @@ public class MainActivity extends Activity {
 
             handler.post(runnableCode); // Looper calling
             flag = true;
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                Intent appInfo = new Intent(MainActivity.this, PilotActivity.class);
+                startActivity(appInfo);
+            }
+        });
+
+
+
         }
 
 
@@ -116,7 +129,7 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            // Control of wifi SSID
+            // CONTROL OF WIFI SSID CONNECTION
             /*WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo;
 
@@ -209,16 +222,19 @@ public class MainActivity extends Activity {
 
                         // adding contact to contact list
                         dataStream.add(positions);
-                        dataAccomulator.add(positions);
+                        dataAccomulator.add(positions); // Accumulates all data of every pilot
                     }
                      // PROVA !!
-                    text_raw_view.setText(dataAccomulator.toString());
-                    dataPilot.clear();
+                    //  text_raw_view.setText(dataAccomulator.toString());
+
+
+                    // GIVES OUT DATA OF A SINGLE PILOT FROM THE ACCUMULATOR
+                    /*  dataPilot.clear();
 
                     for (int i =0; i<dataAccomulator.size();i++) {
                         if (dataAccomulator.get(i).containsValue("Emiliano") )
                             dataPilot.add(dataAccomulator.get(i));
-                    }
+                    }*/
 
 
 
@@ -227,19 +243,19 @@ public class MainActivity extends Activity {
                     //Extended Adapter that is the bridge between a ListView and the data that backs the list,
                     //the ListView can display any data provided that it is wrapped in a ListAdapter
 
-                    /*ListAdapter adapter = new SimpleAdapter(
+                    ListAdapter adapter = new SimpleAdapter(
                     MainActivity.this, dataStream,
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
-                    lv.setAdapter(adapter);*/
+                    lv.setAdapter(adapter);
 
-                    ListAdapter adapter = new SimpleAdapter(
+                    /**  ListAdapter adapter = new SimpleAdapter(
                             MainActivity.this, dataPilot,
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
-                    lv.setAdapter(adapter);
+                    lv.setAdapter(adapter);*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();

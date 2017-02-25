@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -58,21 +58,20 @@
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:id="@+id/text_raw_view"
-        android:layout_below="@+id/connectionControl"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="150dp" />
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         tools:ignore="RtlHardcoded"
-        android:layout_below="@+id/text_raw_view"
+        android:layout_below="@+id/connectionControl"
         android:layout_alignLeft="@+id/text_raw_view"
         android:layout_alignStart="@+id/text_raw_view" />
 
