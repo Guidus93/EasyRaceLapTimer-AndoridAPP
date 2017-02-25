@@ -3,6 +3,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
@@ -27,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +55,7 @@ public class MainActivity extends Activity {
     private TextView title_main,fastest_lap,connectionControl;
 
     //DI PROVA
-    private TextView text_raw_view;
+    private TextView text_raw_view, text_raw_view_2;
 
     private ListView lv ;
     private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
@@ -83,6 +87,7 @@ public class MainActivity extends Activity {
 
         //DI PROVA
         text_raw_view = (TextView) findViewById(R.id.text_raw_view);
+        text_raw_view_2 = (TextView) findViewById(R.id.text_raw_view_2);
 
         image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
@@ -113,8 +118,17 @@ public class MainActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                Intent appInfo = new Intent(MainActivity.this, PilotActivity.class);
-                startActivity(appInfo);
+                /*Intent appInfo = new Intent(MainActivity.this, PilotActivity.class);
+                startActivity(appInfo);*/
+
+                String str = adapter.getItemAtPosition(position).toString();
+               String sub = str.substring(str.indexOf("name")+5,str.lastIndexOf(", position"));
+
+
+
+                //String name_pilot = str.substring(str.indexOf("=") + 1, str.indexOf(","));
+
+                text_raw_view.setText(sub);
             }
         });
 
@@ -203,6 +217,11 @@ public class MainActivity extends Activity {
 
                         String avg_lap_time = d.getString("avg_lap_time");
                         Float avg_lap_time_sec = (Float.parseFloat(avg_lap_time) / 1000);
+
+//                        BigDecimal bd = new BigDecimal(avg_lap_time_sec);
+//                        BigDecimal res = bd.setScale(2, RoundingMode.HALF_DOWN);
+//                        avg_lap_time_sec = res.floatValue();
+
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
 
                         JSONObject fast_lap = d.getJSONObject("fastest_lap");
@@ -214,8 +233,8 @@ public class MainActivity extends Activity {
                         HashMap<String, String> positions = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        positions.put("position", position);
                         positions.put("name", name);
+                        positions.put("position", position);
                         positions.put("lapcount", lapcount);
                         positions.put("avg_lap_totext", avg_lap_totext);
                         positions.put("fastest_lap", fastest_lap);
@@ -225,7 +244,7 @@ public class MainActivity extends Activity {
                         dataAccomulator.add(positions); // Accumulates all data of every pilot
                     }
                      // PROVA !!
-                    //  text_raw_view.setText(dataAccomulator.toString());
+                     text_raw_view_2.setText(dataAccomulator.toString());
 
 
                     // GIVES OUT DATA OF A SINGLE PILOT FROM THE ACCUMULATOR

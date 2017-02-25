@@ -55,23 +55,33 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:background="@android:color/holo_orange_light" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        android:id="@+id/text_raw_view"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         tools:ignore="RtlHardcoded"
         android:layout_below="@+id/connectionControl"
+        android:layout_alignLeft="@+id/text_raw_view"
+        android:layout_alignStart="@+id/text_raw_view" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:id="@+id/text_raw_view"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:id="@+id/text_raw_view_2"
+        android:layout_below="@+id/text_raw_view"
         android:layout_alignLeft="@+id/text_raw_view"
         android:layout_alignStart="@+id/text_raw_view" />
 
