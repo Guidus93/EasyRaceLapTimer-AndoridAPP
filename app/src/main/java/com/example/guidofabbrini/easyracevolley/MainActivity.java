@@ -29,16 +29,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.os.Handler;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 
 public class MainActivity extends Activity {
-
 
     //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
     private String urlJsonObj = "http://pastebin.com/raw/xLjUGiH8"; //USE THIS URL FOR DEBUG
@@ -46,6 +45,8 @@ public class MainActivity extends Activity {
     private String defaultSSID = new String(data) ; // EASY RACE LAP TIMER <-- SSID
     String currentSSID ;
     private static String TAG = MainActivity.class.getSimpleName();
+
+    String session_title;
 
     // Progress dialog
     private ProgressDialog pDialog;
@@ -118,17 +119,28 @@ public class MainActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                /*Intent appInfo = new Intent(MainActivity.this, PilotActivity.class);
-                startActivity(appInfo);*/
+                Intent pilot_act = new Intent(MainActivity.this, PilotActivity.class);
 
                 String str = adapter.getItemAtPosition(position).toString();
                String sub = str.substring(str.indexOf("name")+5,str.lastIndexOf(", position"));
 
+                dataPilot.clear();
 
+                for (int i =0; i<dataAccomulator.size();i++) {
+                    if (dataAccomulator.get(i).containsValue(sub) )
+                        dataPilot.add(dataAccomulator.get(i));
+                }
 
-                //String name_pilot = str.substring(str.indexOf("=") + 1, str.indexOf(","));
+//                pilot_act.putExtra(EXTRA_MESSAGE, dataPilot);
+
+                pilot_act.putExtra("session_title",session_title);
+                pilot_act.putExtra("dataPilot", dataPilot);
+
 
                 text_raw_view.setText(sub);
+
+                startActivity(pilot_act);
+
             }
         });
 
@@ -196,9 +208,9 @@ public class MainActivity extends Activity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     JSONObject session = jsonObj.getJSONObject("session");
-                    String title = session.getString("title");
+                    session_title = session.getString("title");
 
-                    title_main.setText(title);
+                    title_main.setText(session_title);
 
 
 
@@ -217,10 +229,6 @@ public class MainActivity extends Activity {
 
                         String avg_lap_time = d.getString("avg_lap_time");
                         Float avg_lap_time_sec = (Float.parseFloat(avg_lap_time) / 1000);
-
-//                        BigDecimal bd = new BigDecimal(avg_lap_time_sec);
-//                        BigDecimal res = bd.setScale(2, RoundingMode.HALF_DOWN);
-//                        avg_lap_time_sec = res.floatValue();
 
                         String avg_lap_totext = Float.toString(avg_lap_time_sec);
 
@@ -254,7 +262,6 @@ public class MainActivity extends Activity {
                         if (dataAccomulator.get(i).containsValue("Emiliano") )
                             dataPilot.add(dataAccomulator.get(i));
                     }*/
-
 
 
                     //       Updating parsed JSON data into ListView
@@ -324,6 +331,8 @@ public class MainActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
 }
+
 
 
