@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
         // Initiate wifi service manager
         mainWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
-        // Check for wifi is disabled
+        // CHECK IF WIFI IS DISABLED AND CHANGES IT --> TODO: UNCOMMENT BEFORE RELEASING
 //        if (!mainWifi.isWifiEnabled())
 //        {
 //            // If wifi disabled then enable it
@@ -159,7 +159,7 @@ public class MainActivity extends Activity {
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            // CONTROL OF WIFI SSID CONNECTION
+            // CONTROL OF WIFI SSID CONNECTION --> TODO: UNCOMMENT BEFORE RELEASING
             /*WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo;
 
@@ -266,16 +266,6 @@ public class MainActivity extends Activity {
                          pilot_lap_count[Integer.parseInt(transponder)] = Integer.parseInt(lapcount);
 
                     }
-
-
-
-                    // GIVES OUT DATA OF A SINGLE PILOT FROM THE ACCUMULATOR
-                    /*  dataPilot.clear();
-
-                    for (int i =0; i<dataAccomulator.size();i++) {
-                        if (dataAccomulator.get(i).containsValue("Emiliano") )
-                            dataPilot.add(dataAccomulator.get(i));
-                    }*/
 
 
                     //       Updating parsed JSON data into ListView
