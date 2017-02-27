@@ -34,13 +34,11 @@ import java.util.HashMap;
 
 import android.os.Handler;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 
 public class MainActivity extends Activity {
 
     //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
-    private String urlJsonObj = "http://pastebin.com/raw/xLjUGiH8"; //USE THIS URL FOR DEBUG
+    private String urlJsonObj = "https://raw.githubusercontent.com/Guidus93/EasyRaceLapTimer-AndoridAPP/master/%22PasteBin%22%20-%3EToDebug";
     char data[] = {'"', 'm', 'o', 't', 'o', 'l', 'a', 'i', 'k', 'a', '"'};
     private String defaultSSID = new String(data) ; // EASY RACE LAP TIMER <-- SSID
     String currentSSID ;
@@ -55,11 +53,8 @@ public class MainActivity extends Activity {
 
     private TextView title_main,fastest_lap,connectionControl;
 
-    //DI PROVA
-    private TextView text_raw_view, text_raw_view_2;
-
     private ListView lv ;
-    private Boolean flag; // we use this flag to follow the android ActivityLifeCycle
+    private Boolean flag,flag_pilot; // we use this flag to follow the android ActivityLifeCycle
     ArrayList<HashMap<String, String>> dataStream , dataAccomulator, dataPilot;
    /**FAMILY TREE of the HashMap implementation
      Map Interface is an object that maps keys to values
@@ -86,9 +81,6 @@ public class MainActivity extends Activity {
         fastest_lap = (TextView) findViewById(R.id.fastest_lap);
         connectionControl = (TextView) findViewById(R.id.connectionControl);
 
-        //DI PROVA
-        text_raw_view = (TextView) findViewById(R.id.text_raw_view);
-        text_raw_view_2 = (TextView) findViewById(R.id.text_raw_view_2);
 
         image_view.setImageResource(R.drawable.easy_race_lap_timer_logo_1); // Setting the ImageView resource
 
@@ -104,14 +96,15 @@ public class MainActivity extends Activity {
         mainWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
         // Check for wifi is disabled
-        if (!mainWifi.isWifiEnabled())
-        {
-            // If wifi disabled then enable it
-            Toast.makeText(getApplicationContext(), "Wifi is disabled.. making it enabled",
-                    Toast.LENGTH_LONG).show();
-
-            mainWifi.setWifiEnabled(true);
-        }
+//        if (!mainWifi.isWifiEnabled())
+//        {
+//            // If wifi disabled then enable it
+//            Toast.makeText(getApplicationContext(), "Wifi is disabled.. making it enabled",
+//                    Toast.LENGTH_LONG).show();
+//
+//            mainWifi.setWifiEnabled(true);
+//        }
+           flag_pilot = false;
 
             handler.post(runnableCode); // Looper calling
             flag = true;
@@ -119,8 +112,16 @@ public class MainActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                Intent pilot_act = new Intent(MainActivity.this, PilotActivity.class);
 
+
+                //SECOND ACTIVITY --> IT'S BETTER WITHOUT !
+                //Intent pilot_act = new Intent(MainActivity.this, PilotActivity.class);
+                //pilot_act.putExtra(EXTRA_MESSAGE, dataPilot);
+                //pilot_act.putExtra("session_title",session_title);
+                //pilot_act.putExtra("dataPilot", dataPilot);
+                // startActivity(pilot_act);
+
+             if(!flag_pilot){
                 String str = adapter.getItemAtPosition(position).toString();
                String sub = str.substring(str.indexOf("name")+5,str.lastIndexOf(", position"));
 
@@ -131,15 +132,18 @@ public class MainActivity extends Activity {
                         dataPilot.add(dataAccomulator.get(i));
                 }
 
-//                pilot_act.putExtra(EXTRA_MESSAGE, dataPilot);
+                ListAdapter adapter_pilot = new SimpleAdapter(
+                MainActivity.this, dataPilot,
+                R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
+                R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
-                pilot_act.putExtra("session_title",session_title);
-                pilot_act.putExtra("dataPilot", dataPilot);
+                        lv.setAdapter(adapter_pilot);
 
+                flag_pilot = true ;}
+                else {flag_pilot = false ;
+                 makeJsonObjectRequest();
+             }
 
-                text_raw_view.setText(sub);
-
-                startActivity(pilot_act);
 
             }
         });
@@ -187,6 +191,9 @@ public class MainActivity extends Activity {
         }
     };
 
+    // Controlling to accumulate a single lap for pilot
+    int [] pilot_lap_count = new int[100];
+
 
     private void makeJsonObjectRequest() {
 
@@ -217,14 +224,16 @@ public class MainActivity extends Activity {
                     // Getting JSON Array node
                     JSONArray data = jsonObj.getJSONArray("data");
 
+
                     // looping through All data
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject d = data.getJSONObject(i);
                         String position = d.getString("position");
                         JSONObject pilot = d.getJSONObject("pilot");
                         String name = pilot.getString("name");
-                        String quad = pilot.getString("quad");
-                        String team = pilot.getString("team");
+        //                String quad = pilot.getString("quad");
+        //                String team = pilot.getString("team");
+                        String transponder = pilot.getString("transponder_token");
                         String lapcount = d.getString("lap_count");
 
                         String avg_lap_time = d.getString("avg_lap_time");
@@ -249,10 +258,15 @@ public class MainActivity extends Activity {
 
                         // adding contact to contact list
                         dataStream.add(positions);
+
+                        if(Integer.parseInt(lapcount) !=
+                                pilot_lap_count[Integer.parseInt(transponder)])
                         dataAccomulator.add(positions); // Accumulates all data of every pilot
+
+                         pilot_lap_count[Integer.parseInt(transponder)] = Integer.parseInt(lapcount);
+
                     }
-                     // PROVA !!
-                     text_raw_view_2.setText(dataAccomulator.toString());
+
 
 
                     // GIVES OUT DATA OF A SINGLE PILOT FROM THE ACCUMULATOR
@@ -268,20 +282,13 @@ public class MainActivity extends Activity {
 
                     //Extended Adapter that is the bridge between a ListView and the data that backs the list,
                     //the ListView can display any data provided that it is wrapped in a ListAdapter
-
+                    if(!flag_pilot){
                     ListAdapter adapter = new SimpleAdapter(
                     MainActivity.this, dataStream,
                             R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
                             R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
-                    lv.setAdapter(adapter);
-
-                    /**  ListAdapter adapter = new SimpleAdapter(
-                            MainActivity.this, dataPilot,
-                            R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
-                            R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
-
-                    lv.setAdapter(adapter);*/
+                    lv.setAdapter(adapter); }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -30,9 +30,9 @@ public class PilotActivity extends AppCompatActivity {
 
        // ArrayList<HashMap<String, String>> dataPilot = intent.getParcelableArrayListExtra();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        ArrayList<HashMap<String, String>> dataPilot = (ArrayList<HashMap<String, String>>)  intent.getSerializableExtra("dataPilot");
+        //ArrayList<HashMap<String, String>> dataPilot = (ArrayList<HashMap<String, String>>)  intent.getSerializableExtra("dataPilot");
 
 
         // LAVORARCI SU! PASSAGGIO DEL TITOLO
@@ -40,12 +40,12 @@ public class PilotActivity extends AppCompatActivity {
 //        session_title.setText(title);
 
 
-        ListAdapter adapter = new SimpleAdapter(
-                PilotActivity.this, dataPilot,
-                R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
-                R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
+//        ListAdapter adapter = new SimpleAdapter(
+//                PilotActivity.this, dataPilot,
+//                R.layout.list_item, new String[]{"position", "name", "lapcount","avg_lap_totext","fastest_lap"}, new int[]{R.id.position,
+//                R.id.name, R.id.lapcount,R.id.avg_lap_totext,R.id.fastest_lap});
 
-        lv_dataPilot.setAdapter(adapter);
+        //lv_dataPilot.setAdapter(adapter);
 
 
     }
