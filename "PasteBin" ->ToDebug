@@ -5,6 +5,6 @@
 
 {"position":3,"pilot":{"id":6,"name":"John Travolta","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"13","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":4,"avg_lap_time":39860,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":666,"lap_time":12115},"latest_tracked":true} ,
 
-{"position":4,"pilot":{"id":6,"name":"Sandokan","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"2","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":2,"avg_lap_time":13598,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":8,"lap_time":12115},"latest_tracked":true}
+{"position":4,"pilot":{"id":6,"name":"Sandokan","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"2","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":3,"avg_lap_time":13598,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":8,"lap_time":12115},"latest_tracked":true}
 
 ]}
