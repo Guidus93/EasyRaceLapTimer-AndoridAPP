@@ -1,0 +1,10 @@
+{"session":{"title":"Test","maps_laps":0,"current_lap_count":3},"data":[
+{"position":1,"pilot":{"id":6,"name":"Guiduz93","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"13","deleted_at":null,"quad":"Zeez","team":"RAVE_FPV - OZSQUAD"},"lap_count":3,"avg_lap_time":15290,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":3,"lap_time":12115},"latest_tracked":true} ,
+ 
+{"position":2,"pilot":{"id":6,"name":"Emiliano","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"14","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":5,"avg_lap_time":26290,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":3,"lap_time":12115},"latest_tracked":true},
+
+{"position":10,"pilot":{"id":6,"name":"Tarchi","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"15","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":5,"avg_lap_time":3986000,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":666,"lap_time":12115},"latest_tracked":true} ,
+
+{"position":6,"pilot":{"id":6,"name":"Sandokan","image":{"url":"/uploads/pilot/image/6/guido1.JPG"},"transponder_token":"16","deleted_at":null,"quad":"mangiamerda","team":"A_Team"},"lap_count":5,"avg_lap_time":13598,"fastest_lap":{"lap_num":3,"lap_time":12115},"last_lap":{"lap_num":8,"lap_time":12115},"latest_tracked":true}
+
+]}
