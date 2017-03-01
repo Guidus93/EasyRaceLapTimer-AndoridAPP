@@ -37,8 +37,8 @@ import android.os.Handler;
 
 public class MainActivity extends Activity {
 
-    //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";
-    private String urlJsonObj = "https://raw.githubusercontent.com/Guidus93/EasyRaceLapTimer-AndoridAPP/master/%22PasteBin%22%20-%3EToDebug";
+    //private String urlJsonObj ="http://192.168.42.1/api/v1/monitor";  //http://pastebin.com/raw/puYnpK96  //"https://raw.githubusercontent.com/Guidus93/EasyRaceLapTimer-AndoridAPP/master/%22PasteBin%22%20-%3EToDebug"
+    private String urlJsonObj = "https://raw.githubusercontent.com/Guidus93/EasyRaceLapTimer-AndoridAPP/64adca9c0180ec2b34ae3ac23bb4375dd16c707e/%22PasteBin%22%20-%3EToDebug";
     char data[] = {'"', 'm', 'o', 't', 'o', 'l', 'a', 'i', 'k', 'a', '"'};
     private String defaultSSID = new String(data) ; // EASY RACE LAP TIMER <-- SSID
     String currentSSID ;
